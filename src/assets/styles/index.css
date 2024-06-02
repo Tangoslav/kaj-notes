@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Ubuntu", sans-serif;
+}
+
+html, body {
+    overflow-y: hidden;
+    height: 100%;
+}
+
+#root {
+    height: 100%;
+}
+
+.App {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    max-height: 100vh;
+}
+
+/* Hide scrollbar for modern browsers */
+html, body {
+    overflow: hidden; /* Disable scrolling on all browsers */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide scrollbar for Webkit browsers (Chrome, Safari, Edge) */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}

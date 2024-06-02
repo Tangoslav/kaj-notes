@@ -1,0 +1,57 @@
+.note-svg .note-line {
+    transition: stroke-dasharray 1.2s ease-in-out, transform 0.6s ease-in-out;
+    stroke-dasharray: 0, 100;
+}
+
+.note-svg:hover .note-line {
+    stroke-dasharray: 100, 0;
+}
+
+/* Style the first note differently */
+.note-list > .note:nth-child(1) .date {
+    background-color: #f9f9f9;
+    border-bottom: 2px solid #F92A82;
+    color: #F92A82;
+}
+
+/* Style every other note differently */
+.note-list > .note:nth-child(even) {
+    background-color: #e6f7ff;
+}
+
+/* Add a hover effect to notes */
+.note {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.note-list > .note:hover {
+    transform: translateY(-5px) scale(0.98);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Style the tag elements */
+.tag {
+    display: inline-block;
+    background-color: #007acc;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin: 2px;
+}
+
+.filter-input {
+    transition: all 0.3s ease;
+}
+
+.filter-input:focus {
+    transform: scale(0.95);
+}
+
+.clear-button {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.clear-button:hover {
+    transform: rotate(90deg);
+    color: red;
+}

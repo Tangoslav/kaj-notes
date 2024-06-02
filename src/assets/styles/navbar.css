@@ -1,0 +1,128 @@
+/* navbar.css */
+.navbar-link {
+    color: #000;
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin: 3rem;
+    padding: 0.5rem 1rem;
+    position: relative;
+    z-index: 1;
+    border-radius: 1.2rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+    -webkit-transition: color 0.3s ease, -webkit-transform 0.3s ease; /* Safari */
+}
+
+.navbar-link:hover {
+    color: #0056b3;
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1); /* Safari */
+}
+
+.current-navbar-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: whitesmoke;
+    border-radius: 1.2rem;
+    z-index: -1;
+    transition: transform 0.3s ease;
+    -webkit-transition: -webkit-transform 0.3s ease; /* Safari */
+}
+
+.current-navbar-link {
+    color: #000;
+    background-color: whitesmoke;
+}
+
+.navbar-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: aliceblue;
+    border-radius: 1.2rem;
+    z-index: -1;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    -webkit-transition: -webkit-transform 0.3s ease, opacity 0.3s ease; /* Safari */
+    transform: scaleX(0);
+    -webkit-transform: scaleX(0); /* Safari */
+    transform-origin: left;
+    -webkit-transform-origin: left; /* Safari */
+    opacity: 0;
+}
+
+.navbar-link:hover::before {
+    transform: scaleX(1);
+    -webkit-transform: scaleX(1); /* Safari */
+    opacity: 1;
+}
+
+/*logo*/
+@keyframes logoEnter {
+    0% {
+        transform: translateX(-150%) rotateY(0deg) scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: translateX(0) rotateY(180deg) scale(1.5);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(0) rotateY(360deg) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes trailEnter {
+    0% {
+        transform: translateX(-150%);
+        opacity: 0;
+    }
+    50% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 0;
+    }
+}
+
+.navbar-link img {
+    position: relative;
+    transition: transform 1s ease-in-out;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.navbar-link img::before,
+.navbar-link img::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(59, 130, 246, 0.5); /* Semi-transparent blue */
+    top: 0;
+    left: 0;
+    transform: translateX(-150%);
+    opacity: 0;
+    z-index: -1;
+}
+
+.navbar-link img::before {
+    animation: trailEnter 1s ease-in-out forwards;
+}
+
+.navbar-link img::after {
+    animation: trailEnter 1s ease-in-out 0.2s forwards;
+}
+
+.navbar-link:hover img {
+    animation: logoEnter 1s ease-in-out forwards;
+}
+
