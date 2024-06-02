@@ -22,9 +22,6 @@ Thumbs.db
 *.njsproj
 *.sln
 
-# Tailwind CSS generated file
-tailwind.css
-
 # Other build and cache directories
 .cache/
 coverage/
