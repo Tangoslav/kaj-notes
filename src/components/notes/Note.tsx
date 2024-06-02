@@ -27,17 +27,19 @@ interface NoteProps {
     content: string;
     date: string;
     tags: string[];
+    location?: string;
     onTagClick: (tag: string) => void;
 }
 
 const Note: React.FC<NoteProps> = ({
-    id,
-    title,
-    content,
-    date,
-    tags,
-    onTagClick,
-}) => {
+                                       id,
+                                       title,
+                                       content,
+                                       date,
+                                       tags,
+                                       location,
+                                       onTagClick,
+                                   }) => {
     const { showModal, hideModal } = useModal();
     const [note, setNote] = useState({
         id,
@@ -45,54 +47,59 @@ const Note: React.FC<NoteProps> = ({
         content,
         date,
         tags,
-        location: '',
+        location: location || '',
     });
 
     const handleNoteClick = () => {
         showModal(
-            <NoteModal
-                note={note}
-                onClose={hideModal}
-                onUpdate={(updatedNote) => setNote(updatedNote)} // Update the note state
-            />
+          <NoteModal
+            note={note}
+            onClose={hideModal}
+            onUpdate={(updatedNote) => setNote(updatedNote)} // Update the note state
+          />
         );
     };
 
     const pinned = isNotePinned(note);
 
     return (
-        <div className="w-full flex justify-center note shadow-md border-blue-200 border-2 rounded-xl p-4 m-2">
-            <div
-                className="relative cursor-pointer w-full"
-                onClick={handleNoteClick}
-            >
-                {pinned && (
-                    <span className="absolute top-2 right-2 text-red-500">
+      <div className="w-full flex justify-center note shadow-md border-blue-200 border-2 rounded-xl p-4 m-2">
+          <div
+            className="relative cursor-pointer w-full"
+            onClick={handleNoteClick}
+          >
+              {pinned && (
+                <span className="absolute top-2 right-2 text-red-500">
                         📍
                     </span>
-                )}
-                <h2 className="border-b border-blue-200 mb-3 mt-3 p-3 text-3xl text-gray-800">
-                    {abbreviateTitle(note.title)}
-                </h2>
-                <p className="p-3 text-gray-700">
-                    {abbreviateContent(note.content)}
+              )}
+              <h2 className="border-b border-blue-200 mb-3 mt-3 p-3 text-3xl text-gray-800">
+                  {abbreviateTitle(note.title)}
+              </h2>
+              <p className="p-3 text-gray-700">
+                  {abbreviateContent(note.content)}
+              </p>
+              <p className="date p-3 text-gray-500 text-sm">
+                  {formatDate(note.date)}
+              </p>
+              {note.location && (
+                <p className="location p-3 text-gray-500 text-sm">
+                    Location: {note.location}
                 </p>
-                <p className="date p-3 text-gray-500 text-sm">
-                    {formatDate(note.date)}
-                </p>
-                <div className="flex flex-wrap mb-4">
-                    {note.tags.map((tag) => (
-                        <span
-                            key={tag}
-                            onClick={() => onTagClick(tag)}
-                            className="tag bg-blue-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 cursor-pointer"
-                        >
+              )}
+              <div className="flex flex-wrap mb-4">
+                  {note.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      onClick={() => onTagClick(tag)}
+                      className="tag bg-blue-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 cursor-pointer"
+                    >
                             {tag}
                         </span>
-                    ))}
-                </div>
-            </div>
-        </div>
+                  ))}
+              </div>
+          </div>
+      </div>
     );
 };
 
