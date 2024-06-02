@@ -72,10 +72,7 @@ const NewNoteForm: React.FC = () => {
             return;
         }
 
-        const userLocation =
-          localStorage.getItem('userLocation') || 'No location provided';
-
-        await createNote(title, `${content}\n\nLocation: ${userLocation}`, tags);
+        await createNote(title, `${content}`, tags);
         playSound(newNoteSound);
 
         setTitle('');
