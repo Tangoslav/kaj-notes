@@ -8,11 +8,11 @@ import {
 } from '../../../utils/noteUtils';
 import { formatDate } from '../../../utils/dateUtils';
 import { playSound } from '../../../utils/soundUtils';
-import pinNoteSound from '../../../assets/sounds/notePinSound.wav';
+import pinNoteSound from '../../../assets/sounds/notePinSound.ogg';
 import { ModalContext } from '../../../context/ModalContext';
 import EditNoteForm from './EditNoteForm';
 import ConfirmationDialog from './ConfirmationDialog';
-import '../../../assets/styles/noteModal.css'; // Ensure this path is correct
+import '../../../assets/styles/noteModal.css';
 
 interface NoteModalProps {
     note: NoteType;

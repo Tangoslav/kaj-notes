@@ -13,38 +13,46 @@ const NewNoteForm: React.FC = () => {
     const [isOnline, setIsOnline] = useState(navigator.onLine);
     const titleInputRef = useRef<HTMLInputElement>(null);
 
+    const fetchLocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              async (position) => {
+                  const { latitude, longitude } = position.coords;
+                  const locationString = await getCityFromCoordinates(latitude, longitude);
+                  localStorage.setItem('userLocation', locationString);
+              },
+              (error) => {
+                  console.error('Error fetching location:', error);
+                  localStorage.setItem(
+                    'userLocation',
+                    'Location access denied.'
+                  );
+              }
+            );
+        } else {
+            localStorage.setItem(
+              'userLocation',
+              'Geolocation is not supported by this browser.'
+            );
+        }
+    };
+
     useEffect(() => {
         if (titleInputRef.current) {
             titleInputRef.current.focus();
         }
 
-        const fetchLocation = () => {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                  async (position) => {
-                      const { latitude, longitude } = position.coords;
-                      const locationString = await getCityFromCoordinates(latitude, longitude);
-                      localStorage.setItem('userLocation', locationString);
-                  },
-                  (error) => {
-                      console.error('Error fetching location:', error);
-                      localStorage.setItem(
-                        'userLocation',
-                        'Location access denied.'
-                      );
-                  }
-                );
-            } else {
-                localStorage.setItem(
-                  'userLocation',
-                  'Geolocation is not supported by this browser.'
-                );
-            }
+        if (isOnline) {
+            fetchLocation();
+        } else {
+            localStorage.setItem('userLocation', 'No location, offline mode.');
+        }
+
+        const handleOnline = () => {
+            setIsOnline(true);
+            fetchLocation();
         };
 
-        fetchLocation();
-
-        const handleOnline = () => setIsOnline(true);
         const handleOffline = () => setIsOnline(false);
 
         window.addEventListener('online', handleOnline);
@@ -54,7 +62,7 @@ const NewNoteForm: React.FC = () => {
             window.removeEventListener('online', handleOnline);
             window.removeEventListener('offline', handleOffline);
         };
-    }, []);
+    }, [isOnline]);
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -64,7 +72,10 @@ const NewNoteForm: React.FC = () => {
             return;
         }
 
-        await createNote(title, `${content}`, tags);
+        const userLocation =
+          localStorage.getItem('userLocation') || 'No location provided';
+
+        await createNote(title, `${content}\n\nLocation: ${userLocation}`, tags);
         playSound(newNoteSound);
 
         setTitle('');
